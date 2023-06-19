@@ -1,0 +1,5 @@
+/usr/local/lib/libCBS.a
+/usr/local/lib/cmake/CBS/CBSTargets.cmake
+/usr/local/lib/cmake/CBS/CBSTargets-release.cmake
+/usr/local/cmake/CBSConfig.cmake
+/usr/local/cmake/CBSConfigVersion.cmake
