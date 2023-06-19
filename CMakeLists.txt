@@ -26,7 +26,7 @@ add_library(CBS ${SOURCES})
 target_include_directories(CBS
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/inc>
-        $<INSTALL_INTERFACE:include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
@@ -41,9 +41,9 @@ target_link_libraries(CBS
 include(GNUInstallDirs)
 install(TARGETS CBS
         EXPORT CBSTargets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        # LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        # ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        # RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} # include
 )
 
@@ -67,17 +67,21 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/CBSConfig.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/CBSConfig.cmake"
     INSTALL_DESTINATION cmake
 )
+
+# generate the export targets for the build tree
+export(EXPORT "CBSTargets"
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/CBSTargets.cmake"
+    NAMESPACE ${namespace}::
+)
+
 # install config files
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/CBSConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/CBSConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/CBSTargets.cmake"
     DESTINATION cmake
 )
-# generate the export targets for the build tree
-export(EXPORT "CBSTargets"
-    FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/CBSTargets.cmake"
-    NAMESPACE ${namespace}::
-)
+
 # Install command
 # install(TARGETS cbs DESTINATION bin)
 
